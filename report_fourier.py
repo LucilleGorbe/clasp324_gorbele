@@ -9,11 +9,12 @@ import matplotlib.pyplot as plt
 from scipy.fft import fft, fftfreq
 plt.style.use("seaborn-v0_8")
 
+
 def data_import(fname):
     '''
     Generates and processes data from eddy covariance sensor into real units.
     Additionally performs fourier analysis on the data and plots the results.
-    
+
     Parameters
     ----------
     fname : str
@@ -26,11 +27,11 @@ def data_import(fname):
     '''
 
     data = np.genfromtxt(fname, delimiter="  ", names=["AH", "Temp_AH101", "Wind_Speed", "Elapsed_Time"], skip_header=2)
-    
+
     # Calculate and report frequency for the data
     freq = 1/((data["Elapsed_Time"][-1]/1000)/data["Elapsed_Time"].size)
     print(f"Frequency: {freq:.2f}")
-    
+
     # filter out junky data
     data = data[data["AH"] < 100]
 
@@ -75,6 +76,8 @@ def data_import(fname):
     ax1.set_title("Fourier Analysis of Data")
     ax1.set_xlabel("Frequency")
     ax1.set_ylabel(r"Flux Amplitude ($\frac{g}{m^2*s}$)")
+
+    print(f"Maximum frequency contribution: {wvfreq[np.argmax(wvfft)]} Hz")
 
     # Plot time series data
     ax2.plot(time, wvFlux)
