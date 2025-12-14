@@ -85,4 +85,6 @@ def data_import(fname):
     ax2.set_xlabel("Time ($s$)")
     ax2.set_ylabel(r"Flux ($\frac{g}{m^2*s}$)")
 
+    fig.tight_layout()
+
     return fig
